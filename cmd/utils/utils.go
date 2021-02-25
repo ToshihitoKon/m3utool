@@ -3,6 +3,7 @@ package utils
 import (
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -20,4 +21,17 @@ func ReadFile(path string) []string {
 		paths = append(paths, path)
 	}
 	return paths
+}
+
+func CheckFileExist(path string) bool {
+	info, err := os.Stat(path)
+	if err != nil {
+		// 見つからない場合ここ
+		// なんか重いエラーはFatalにしたい気持ちもある
+		return false
+	}
+	if info.IsDir() {
+		return false
+	}
+	return true
 }
